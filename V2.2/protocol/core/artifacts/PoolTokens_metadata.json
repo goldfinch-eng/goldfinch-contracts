@@ -1,0 +1,1753 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "approved",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "ApprovalForAll",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "who",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "configAddress",
+						"type": "address"
+					}
+				],
+				"name": "GoldfinchConfigUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Paused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "TokenBurned",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					}
+				],
+				"name": "TokenMinted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "principalRedeemed",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "interestRedeemed",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					}
+				],
+				"name": "TokenRedeemed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Unpaused",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MINTER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "OWNER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PAUSER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "contract GoldfinchConfig",
+						"name": "_config",
+						"type": "address"
+					}
+				],
+				"name": "__initialize__",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_tokenIdTracker",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "baseURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "config",
+				"outputs": [
+					{
+						"internalType": "contract GoldfinchConfig",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getApproved",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getRoleMember",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleMemberCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "pool",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "tranche",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalAmount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalRedeemed",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "interestRedeemed",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IPoolTokens.TokenInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isAdmin",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					}
+				],
+				"name": "isApprovedForAll",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "isApprovedOrOwner",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "principalAmount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "tranche",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IPoolTokens.MintParams",
+						"name": "params",
+						"type": "tuple"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "mint",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newPool",
+						"type": "address"
+					}
+				],
+				"name": "onPoolCreated",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "ownerOf",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "paused",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "poolAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "pools",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "totalMinted",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalPrincipalRedeemed",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "created",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalRedeemed",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "interestRedeemed",
+						"type": "uint256"
+					}
+				],
+				"name": "redeem",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "safeTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "safeTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "principalAmount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "tranche",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IPoolTokens.MintParams",
+						"name": "params",
+						"type": "tuple"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "self_mint",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenIdReturn",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "setApprovalForAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_poolAddress",
+						"type": "address"
+					}
+				],
+				"name": "setPoolAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenByIndex",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenOfOwnerByIndex",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "tokens",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalRedeemed",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "interestRedeemed",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unpause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "updateGoldfinchConfig",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "validPool",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Goldfinch",
+			"kind": "dev",
+			"methods": {
+				"approve(address,uint256)": {
+					"details": "Approves another address to transfer the given token ID The zero address indicates there is no approved address. There can only be one approved address per token at a given time. Can only be called by the token owner or an approved operator.",
+					"params": {
+						"to": "address to be approved for the given token ID",
+						"tokenId": "uint256 ID of the token to be approved"
+					}
+				},
+				"balanceOf(address)": {
+					"details": "Gets the balance of the specified address.",
+					"params": {
+						"owner": "address to query the balance of"
+					},
+					"returns": {
+						"_0": "uint256 representing the amount owned by the passed address"
+					}
+				},
+				"baseURI()": {
+					"details": "Returns the base URI set via {_setBaseURI}. This will be automatically added as a prefix in {tokenURI} to each token's URI, or to the token ID if no specific URI is set for that token ID."
+				},
+				"burn(uint256)": {
+					"details": "Burns a specific ERC721 token, and removes the data from our mappings",
+					"params": {
+						"tokenId": "uint256 id of the ERC721 token to be burned."
+					}
+				},
+				"getApproved(uint256)": {
+					"details": "Gets the approved address for a token ID, or zero if no address set Reverts if the token ID does not exist.",
+					"params": {
+						"tokenId": "uint256 ID of the token to query the approval of"
+					},
+					"returns": {
+						"_0": "address currently approved for the given token ID"
+					}
+				},
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+				},
+				"getRoleMember(bytes32,uint256)": {
+					"details": "Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive. Role bearers are not sorted in any particular way, and their ordering may change at any point. WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information."
+				},
+				"getRoleMemberCount(bytes32)": {
+					"details": "Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
+				},
+				"isApprovedForAll(address,address)": {
+					"details": "Tells whether an operator is approved by a given owner.",
+					"params": {
+						"operator": "operator address which you want to query the approval of",
+						"owner": "owner address which you want to query the approval of"
+					},
+					"returns": {
+						"_0": "bool whether the given operator is approved by the given owner"
+					}
+				},
+				"isApprovedOrOwner(address,uint256)": {
+					"params": {
+						"spender": "The address to check",
+						"tokenId": "The token id to check for"
+					},
+					"returns": {
+						"_0": "True if approved to redeem/transfer/burn the token, false if not"
+					}
+				},
+				"mint((uint256,uint256),address)": {
+					"params": {
+						"params": "Struct containing the tranche and the amount",
+						"to": "The address that should own the position"
+					},
+					"returns": {
+						"tokenId": "The token ID (auto-incrementing integer across all pools)"
+					}
+				},
+				"name()": {
+					"details": "Gets the token name.",
+					"returns": {
+						"_0": "string representing the token name"
+					}
+				},
+				"onPoolCreated(address)": {
+					"params": {
+						"newPool": "The address of the newly created pool"
+					}
+				},
+				"ownerOf(uint256)": {
+					"details": "Gets the owner of the specified token ID.",
+					"params": {
+						"tokenId": "uint256 ID of the token to query the owner of"
+					},
+					"returns": {
+						"_0": "address currently marked as the owner of the given token ID"
+					}
+				},
+				"pause()": {
+					"details": "Pauses all token transfers. See {ERC721Pausable} and {Pausable-_pause}. Requirements: - the caller must have the `PAUSER_ROLE`."
+				},
+				"paused()": {
+					"details": "Returns true if the contract is paused, and false otherwise."
+				},
+				"redeem(uint256,uint256,uint256)": {
+					"params": {
+						"interestRedeemed": "The incremental amount of interest redeemed",
+						"principalRedeemed": "The incremental amount of principal redeemed (cannot be more than principal deposited)",
+						"tokenId": "The token id to update (must be owned by the pool calling this function)"
+					}
+				},
+				"renounceRole(bytes32,address)": {
+					"details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`."
+				},
+				"revokeRole(bytes32,address)": {
+					"details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role."
+				},
+				"safeTransferFrom(address,address,uint256)": {
+					"details": "Safely transfers the ownership of a given token ID to another address If the target address is a contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer, and return the magic value `bytes4(keccak256(\"onERC721Received(address,address,uint256,bytes)\"))`; otherwise, the transfer is reverted. Requires the msg.sender to be the owner, approved, or operator",
+					"params": {
+						"from": "current owner of the token",
+						"to": "address to receive the ownership of the given token ID",
+						"tokenId": "uint256 ID of the token to be transferred"
+					}
+				},
+				"safeTransferFrom(address,address,uint256,bytes)": {
+					"details": "Safely transfers the ownership of a given token ID to another address If the target address is a contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer, and return the magic value `bytes4(keccak256(\"onERC721Received(address,address,uint256,bytes)\"))`; otherwise, the transfer is reverted. Requires the _msgSender() to be the owner, approved, or operator",
+					"params": {
+						"_data": "bytes data to send along with a safe transfer check",
+						"from": "current owner of the token",
+						"to": "address to receive the ownership of the given token ID",
+						"tokenId": "uint256 ID of the token to be transferred"
+					}
+				},
+				"setApprovalForAll(address,bool)": {
+					"details": "Sets or unsets the approval of a given operator An operator is allowed to transfer all tokens of the sender on their behalf.",
+					"params": {
+						"approved": "representing the status of the approval to be set",
+						"operator": "operator address to set the approval"
+					}
+				},
+				"supportsInterface(bytes4)": {
+					"details": "See {IERC165-supportsInterface}. Time complexity O(1), guaranteed to always use less than 30 000 gas."
+				},
+				"symbol()": {
+					"details": "Gets the token symbol.",
+					"returns": {
+						"_0": "string representing the token symbol"
+					}
+				},
+				"tokenByIndex(uint256)": {
+					"details": "Gets the token ID at a given index of all the tokens in this contract Reverts if the index is greater or equal to the total number of tokens.",
+					"params": {
+						"index": "uint256 representing the index to be accessed of the tokens list"
+					},
+					"returns": {
+						"_0": "uint256 token ID at the given index of the tokens list"
+					}
+				},
+				"tokenOfOwnerByIndex(address,uint256)": {
+					"details": "Gets the token ID at a given index of the tokens list of the requested owner.",
+					"params": {
+						"index": "uint256 representing the index to be accessed of the requested tokens list",
+						"owner": "address owning the tokens list to be accessed"
+					},
+					"returns": {
+						"_0": "uint256 token ID at the given index of the tokens list owned by the requested address"
+					}
+				},
+				"tokenURI(uint256)": {
+					"details": "Returns the URI for a given token ID. May return an empty string. If a base URI is set (via {_setBaseURI}), it is added as a prefix to the token's own URI (via {_setTokenURI}). If there is a base URI but no token URI, the token's ID will be used as its URI when appending it to the base URI. This pattern for autogenerated token URIs can lead to large gas savings. .Examples |=== |`_setBaseURI()` |`_setTokenURI()` |`tokenURI()` | \"\" | \"\" | \"\" | \"\" | \"token.uri/123\" | \"token.uri/123\" | \"token.uri/\" | \"123\" | \"token.uri/123\" | \"token.uri/\" | \"\" | \"token.uri/<tokenId>\" |=== Requirements: - `tokenId` must exist."
+				},
+				"totalSupply()": {
+					"details": "Gets the total amount of tokens stored by the contract.",
+					"returns": {
+						"_0": "uint256 representing the total amount of tokens"
+					}
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "Transfers the ownership of a given token ID to another address. Usage of this method is discouraged, use {safeTransferFrom} whenever possible. Requires the msg.sender to be the owner, approved, or operator.",
+					"params": {
+						"from": "current owner of the token",
+						"to": "address to receive the ownership of the given token ID",
+						"tokenId": "uint256 ID of the token to be transferred"
+					}
+				},
+				"unpause()": {
+					"details": "Unpauses all token transfers. See {ERC721Pausable} and {Pausable-_unpause}. Requirements: - the caller must have the `PAUSER_ROLE`."
+				}
+			},
+			"title": "PoolTokens",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"isApprovedOrOwner(address,uint256)": {
+					"notice": "Returns a boolean representing whether the spender is the owner or the approved spender of the token"
+				},
+				"mint((uint256,uint256),address)": {
+					"notice": "Called by pool to create a debt position in a particular tranche and amount"
+				},
+				"onPoolCreated(address)": {
+					"notice": "Called by the GoldfinchFactory to register the pool as a valid pool. Only valid pools can mint/redeem tokens"
+				},
+				"redeem(uint256,uint256,uint256)": {
+					"notice": "Updates a token to reflect the principal and interest amounts that have been redeemed."
+				},
+				"updateGoldfinchConfig()": {
+					"notice": "Migrates to a new goldfinch config address"
+				}
+			},
+			"notice": "PoolTokens is an ERC721 compliant contract, which can represent  junior tranche or senior tranche shares of any of the borrower pools.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/PoolTokens.sol": "PoolTokens"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 1200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol": {
+			"keccak256": "0xe81686511d62f18b2d9c693c2c94c0a789c690de63aa90e15451ebf65c5bfd3e",
+			"urls": [
+				"bzz-raw://1332ee1d2b096456bf2e5795b5871d0fed47be6a31c9a2f2cef9206a299565ea",
+				"dweb:/ipfs/Qmdu1847Y4UL3gTjbLUManMGfxYEoyGPSodM3Br89SKzwx"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol": {
+			"keccak256": "0x9bfec92e36234ecc99b5d37230acb6cd1f99560233753162204104a4897e8721",
+			"urls": [
+				"bzz-raw://5cf7c208583d4d046d75bd99f5507412ab01cce9dd9f802ce9768a416d93ea2f",
+				"dweb:/ipfs/QmcQS1BBMPpVEkXP3qzwSjxHNrqDek8YeR7xbVWDC9ApC7"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.sol": {
+			"keccak256": "0x3954a5ee18b9297616912390eac7b0fe698e6ffea5a50dc3ccb0980cae210e86",
+			"urls": [
+				"bzz-raw://944779923ae00addaad98671de2303268765d53f1b0d66076280585edd084862",
+				"dweb:/ipfs/QmRtRFCkvsWD3c6WBpAh3wgMZKXBaFfRAvB76TsVFiUdEw"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/introspection/ERC165.sol": {
+			"keccak256": "0xd1778eb2a00f482020d0298305421371eb6487ca0d7d05d9e2b91c353e53f47f",
+			"urls": [
+				"bzz-raw://1d8c81a9961cf1c95a3bca7ae896c8446f8627bfff1f0caf32254d75d3e03c07",
+				"dweb:/ipfs/QmeRL8Se6J1rTnwtZpgn3LcA1jQ7gr4td7YmgdaWZH5oxD"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/introspection/IERC165.sol": {
+			"keccak256": "0x9175561c374ec1fc33045e5dfdde2057e63e00debf432875f9e1e3395d99c149",
+			"urls": [
+				"bzz-raw://b0167043c1938b56904deaa481a73041aa4a9e054c60db0b0dfbebfe7869c06a",
+				"dweb:/ipfs/QmUoYjhymBr6WUpExKgRvKxXD5fcdpQEe1o9ResKZu6CC5"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol": {
+			"keccak256": "0x04d34b3cd5677bea25f8dfceb6dec0eaa071d4d4b789a43f13fe0c415ba4c296",
+			"urls": [
+				"bzz-raw://e7e8b526a6839e5ba14f0d23a830387fec47f7043ce01d42c9f285b709a9d080",
+				"dweb:/ipfs/QmXmhhFmX5gcAvVzNiDPAGA35iHMPNaYtQkACswRHBVTNw"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x6cc1cb934a3ac2137a7dcaed018af9e235392236ceecfd3687259702b9c767ad",
+			"urls": [
+				"bzz-raw://0055fa88138cd1c3c6440370f8580f85857f8fe9dec41c99af9eafbeb8d9c3ce",
+				"dweb:/ipfs/QmX1xDh8vwGLLCH8ti45eXjQ7Wcxv1FEGTR3jkFnd5Nv6F"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/ERC721.sol": {
+			"keccak256": "0x5b08ef130698e8270f01c481f687a470e436080bafdbfa33abbf6467c1adb619",
+			"urls": [
+				"bzz-raw://1f2c7f80b2f7038c3a90808883871a1d424c4ea725fc4e61aaf9cbcb2a7656fb",
+				"dweb:/ipfs/QmZZ17KkLWGz5BsjZwakC6mG2Y4Lnn5pGxjzPvYceoYVeg"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/ERC721Pausable.sol": {
+			"keccak256": "0x8849c741b6bb99d881160d12957044e67d431d9b1847703132357eaa54d7a235",
+			"urls": [
+				"bzz-raw://3a3b25637abdc9bcf09c6d69a5818b0fea8d412d017a57978bf1efd208d89ba9",
+				"dweb:/ipfs/Qmf5oTD9Qgb8keAT4CgAQ4y7NtkbSReeV7dvWCwngMykyM"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/IERC721.sol": {
+			"keccak256": "0x734b5bedb78074a59bca6aff9e5a1801c9c7e9c5314daf32e14857161fb36932",
+			"urls": [
+				"bzz-raw://4574e71185f6693eb5cdf7a5126fba97caf0ec0366b08290dd361af44b3414d3",
+				"dweb:/ipfs/QmTPBh1R3EU973H7h6D1kQ1XBA1oX2QdSHZACyytWUYKsn"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/IERC721Enumerable.sol": {
+			"keccak256": "0xf81dbd00ad4a1e4795df72759e33872c2599ea6c060be5898ed5d6fcd8ee9a11",
+			"urls": [
+				"bzz-raw://44dfcc25314c5ed29bc069c4746f87d98bb30a8dbc1a9bdeb797c2a530b9b9c5",
+				"dweb:/ipfs/QmbRc5bKDobjE6zamLUy6Sh5HKd6XtNAsfBJzgZuQB3jpv"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/IERC721Metadata.sol": {
+			"keccak256": "0xa17f4147965ceccd9f2017b14fcf8ef142346ec69c7e0424fd5c99f5ffeed8fa",
+			"urls": [
+				"bzz-raw://25315aea456015e8a2bc2b5badde793d1ae16d67d09df50ecb90a2af13674b92",
+				"dweb:/ipfs/QmTujwcp5f1LioDNdRMfsXs2MsCWu2UeijhEg4VnDbzZmk"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/IERC721Receiver.sol": {
+			"keccak256": "0xa0237f846362c88efa0b2a5815e5cf95cf58c1f9acf654fa6e57f62090fdc92d",
+			"urls": [
+				"bzz-raw://ed15922f47d283422ed74b3ed7ff4c8df4831d7611953b5c970f460bf2215e3c",
+				"dweb:/ipfs/QmaNLi68QwwZhENcbM6D5GP6Yp3xC8fQY7gEMXvWES92uK"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol": {
+			"keccak256": "0x5f7da58ee3d9faa9b8999a93d49c8ff978f1afc88ae9bcfc6f9cbb44da011c2b",
+			"urls": [
+				"bzz-raw://4f089d954b3ecaa26949412fe63e9a184b056562c6c13dd4a0529a5d9a2e685a",
+				"dweb:/ipfs/QmVK5iCNAMcEJQxT59bsC5E53JQASDQPU6khHox3d5ZXCn"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/Counters.sol": {
+			"keccak256": "0x4f3a00edb976e97943fe0a620ea2948955a75eff2a9231c202d50d1e062d8da5",
+			"urls": [
+				"bzz-raw://4d83aa87b7c75f666d57a0e5b779a19c00b453b14ee4ed88cfda6d056fdcf14c",
+				"dweb:/ipfs/QmXpWwQVFo66hsrAZmHxoxNzwEwBDgNWvaUYqY4TJV38vk"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/EnumerableMap.sol": {
+			"keccak256": "0xfd5cf8319cb84ca04ea407d6fba686d53ad7f5d2bf476f41678f5a751d12a7ea",
+			"urls": [
+				"bzz-raw://45b75b553c4a9053429609b1c3db481f1728ca00448f01acc4065249bbf87adc",
+				"dweb:/ipfs/QmRZH6QM32mJn1GZCAPXUQtBz65H4kk6DsGQbGNo4ZNPy9"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/EnumerableSet.sol": {
+			"keccak256": "0x7f6401708b61f575b497aa7c8118ca9d70348643c83c26e70d9b643edf1a95c1",
+			"urls": [
+				"bzz-raw://b020d65f592c1715bc3d5799ad835cd975ef7d314f340f27603fb99ad86a0427",
+				"dweb:/ipfs/QmQoGZmzE5aDTMGJM4BW77eraerfTSV9Rs8wykpQ42i1in"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol": {
+			"keccak256": "0x2ad5473fe88d9ab30c6cd495ab8895daae8c4a48cf8231282a2d339387b35006",
+			"urls": [
+				"bzz-raw://a737c60474c063efc28e5922b6a1d073588c010eb67f883273d3ec29d8e52d6b",
+				"dweb:/ipfs/QmWCeqeZhR45S1mcjPRYEMy1DCHMy9sXDfwYLPycFRh2Nk"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard.sol": {
+			"keccak256": "0x75a600e5ed3443ecf3b7fb636064b404b358317fd6cd91e70e3ca5cf2370e882",
+			"urls": [
+				"bzz-raw://5916e664a17b3fdbdc311579705bad74f433769c340346c371db2ecfa8427d24",
+				"dweb:/ipfs/QmYNLuiPo4iRPWFJriVgqPELRUrFBFLpp5YnMMmqQ8zhBh"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/Strings.sol": {
+			"keccak256": "0xd1d78b1c8534fbcf8fdc8fbfec9133df142ef8cae9ae820929dfe6d80d2c790a",
+			"urls": [
+				"bzz-raw://193a827fbe83fa83c4cabb172dc438dd45c50253858a1f2bf56e8f9a2d548386",
+				"dweb:/ipfs/QmbWBHwHv7CyHSZY6jxnaDiHWGEEyVb8LeGdRpWXUjaiBr"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/external/ERC721PresetMinterPauserAutoId.sol": {
+			"keccak256": "0x3fd8a5f040cd0a13c4aef383f3f4a797a98392f7f0be1bd9e0dad82f7e0e41f8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bbc071d2c9fb7492d2c39afeb3fa5fac61f25d5465998fc02993d80541512f03",
+				"dweb:/ipfs/QmbnebMfkWxMrcWLCTaffrt8pBY4JeW8tmVzVsiiZbJPXW"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IBackerRewards.sol": {
+			"keccak256": "0x69973a97effbe4fee58ce0b7d26aa5ebc49cd86e37b31a6b2a9ead176191dcb7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://674ed85296e4384b28b6e4a5df33a5fbf2512f0416f76905cc5ef35b5399e6bc",
+				"dweb:/ipfs/QmNiLKvF4xcGa2UoYuERvfWrNVjvz7rCzQCrPeNKR5YkxK"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICUSDCContract.sol": {
+			"keccak256": "0x6d2cc9d84c55c0aa2f766aa3cc6371cdc7cf040e88e4f6a34ba1f6d40e2e0b5a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ddfd6e3a51a25cc4738750b94d9174f174761f0842c5edb55ebe450f6cc2a0b0",
+				"dweb:/ipfs/QmaHh6TD7Brazb5qJVvup7pTN5a8ofmdH4LjrnfUg1DRG4"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICreditDesk.sol": {
+			"keccak256": "0x11f2741210ea8aeb0b94f56e9418d856be1f235cc18dadd7ea2945506c9b4aa1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://044c509fd756e012886736e206535432ba2b7e2391908970e392eda5a63a82a7",
+				"dweb:/ipfs/QmUMb9HYduhCcsHSX1ukjufwRZGBJ9CExerVmDmNCR5czs"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICreditLine.sol": {
+			"keccak256": "0x09e43bbbca3f80c1c1dfc588dfe365792b89e9267026b01408b7ddf6b035c21a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f4217dbea9cf28aa2a2644346a4a212dcbaa0273d18b0c0bf09e7a5eaff20db1",
+				"dweb:/ipfs/QmWEwopfxd9ruB2AELTKwH6qaQdR5gSgK9pEPZRdT2mFRk"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IERC20withDec.sol": {
+			"keccak256": "0x7b5fb02e023b6006a5199992f242caf23f64240c91e625f1390d6ca421b59531",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://63dcca43b583209eb4a57c80a1d167f6c96fe3262eff955983d4fcdbfd66a62d",
+				"dweb:/ipfs/QmVHcjcFF1dZDvKUnrtDuFrJvBLosCMqXpnfQP7YuBVH46"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IFidu.sol": {
+			"keccak256": "0x130a7bd2ddca4f9da2f9090cbcc1d63c1e21e152baca4779f18939977a5f6c04",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3cf77464c131d38d8eead523dcd7ef7a9296d89f6106e53fa02769a90edb805a",
+				"dweb:/ipfs/QmPHqHPhMnLxNTaj58aW7KrhauUbxSMgs7otMB482rss6L"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IGo.sol": {
+			"keccak256": "0x012c616c599e94521e883eecb0c2d0331863aa1c90025bb84f64cca4d0c97a3b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8db27cb721a1efbdcacb780a8ff2c9fa9de912400b40a2ae5276db4c8cafca2b",
+				"dweb:/ipfs/QmSkURVYrEsZAR28t2e3EW1WFfDidfUq9uF46sWzx9bpgc"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IGoldfinchConfig.sol": {
+			"keccak256": "0xb4df9680fa1db27f4204d24cd15af68a73c81b62f83c2ca6d3ee6b0a98bc7da9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1e51563735182feb3cec0fb81c2a8b028e64bcc4c5a242ae94c8b88548184c01",
+				"dweb:/ipfs/Qmec3dijEBa6NmyGUF2VEmfsB7CnUPn2CscmgyfNfuNeTn"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IGoldfinchFactory.sol": {
+			"keccak256": "0xf513d3cc235725b04b123f8456a1a371753591fd6b080362c83b40dd41fb8a3e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4263158038d2a22be679d6922656fffa0e493c3c3d5f68195dfed0a488780873",
+				"dweb:/ipfs/QmRPBGBGSL4Xi72DAGteb3TN9vZWVr7mKCtt4mSvkbYWdw"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IPool.sol": {
+			"keccak256": "0xc113de25b7c7e2ac0180d32fab63d0eab1f9f6198ebc006e414f4fbd309026c4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bef1439a09bf2cb4a568bbe4fc67628d7ca5d9a22e29c2e75b0a9565e38f349e",
+				"dweb:/ipfs/QmXDvsYjvqA9iGP3Ps6i3DQu6Sfzb5EoChtBHJHBKzZLqm"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IPoolTokens.sol": {
+			"keccak256": "0xdbb1f3480d9d61b5afef1d47d3d5675450e857fd6ade0e48eda5c9e81b2be551",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f36ab1e4cd5f98829e39d33f68ed17e93139cabbb965c6d480457096dc116caa",
+				"dweb:/ipfs/QmPj3Q9ikUDg7B9yekuwGktioL6KyzU3BFwxgfqBuXDNTV"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ISeniorPool.sol": {
+			"keccak256": "0xe514d470a9cb73449976c92844c4a587eea90980153af70e223bc9d6854c2497",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://55c6d5baeaa04d2e6d44013eee6d1465dca6852b6815d826c50260d6ba392ffd",
+				"dweb:/ipfs/Qme8C2oc1S3HtmZ9zxSrWSiKaNTBaDMarSbcMkypL124dh"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ISeniorPoolStrategy.sol": {
+			"keccak256": "0x96897152c52e299397a50aeb6aefe5af19fb1152d7dd15a1b29fb21faecb45d7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e8f93a7f3405c3ec32cd0a9616154d6092d5096cc7519e3323c98fdcd4e89adb",
+				"dweb:/ipfs/QmdrtVZaM1CZBgMLSkx5J1ULZxWni2REoqP1F66ESR8tz9"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ITranchedPool.sol": {
+			"keccak256": "0xdc061e9cc61e6710b3680bbb6879121eb20b68ee71b63826a609d4d2cd84f24c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1c0f12a5fa203b02df0a0389549799229004d9d95309056faee8e2ddbfe947c9",
+				"dweb:/ipfs/QmNco6baf9yFSWQY8tY5zUfSkgshNtgZphqbKiDDvPNfNn"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IV2CreditLine.sol": {
+			"keccak256": "0x67ccd4b2d3a3fffb97bbd5453175bbc8812af616a05349834a6d140cd6efbda6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c95546bfbb0ec73f7927d4255ae43ca554ba4ac1de64ac7ed9a56ab14fac2559",
+				"dweb:/ipfs/QmZt6m1dorn4hCifthJ7EE5nBxWAAMw8CEyMsGkuqMXrsS"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/BaseUpgradeablePausable.sol": {
+			"keccak256": "0x7506f4edde679faa1260af6e090c4d090a6c39c6d9420d3b1712822219a60b2c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://08edb3b9dade7cc53750e6921a531ffeb47df0c553ce62e76781dff8713662dc",
+				"dweb:/ipfs/QmSqSfX6QrJkFBZKsp8fEFWjbQiFGxhsmSjTDVCnFMgzeG"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/ConfigHelper.sol": {
+			"keccak256": "0x348ded3802d97beb1660d48967600194de016305ed81bf24d1dff14d7513e71d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7fd50260d00fd69f78dbd9ee09961200a65e6bb62cc8f88c33262ff20865834f",
+				"dweb:/ipfs/QmR7eJtLarQ5Xo7Csa3mbbbbW4xNXhMNJ9xPmaFP8DNdn4"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/ConfigOptions.sol": {
+			"keccak256": "0x1410e0f8353a78fa244f040df467a571cdf39e1b499a6791db0a530334926c72",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f584432207cce13410ec4834d50673b9ca136c4bb2890a9d74a1a5330c0e9f8c",
+				"dweb:/ipfs/QmVqDYNp32wwZ7JS65q4kNP1GPMiaeckqz1WdzxF3xum3J"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/GoldfinchConfig.sol": {
+			"keccak256": "0x20a1c0f6183595dc4529b65f21beb92c76c959bffaba947b9648f6c422f99767",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9fa49d42bc310005e739f6b9619a5b67e453099f149667ba0d0cb5c921047b93",
+				"dweb:/ipfs/QmNmCXFGLDcSYyE8YujagoTQDScUozmH1s6GnfcmqYqaKm"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/PauserPausable.sol": {
+			"keccak256": "0x855f5027a20c77b500dd8618a4881c64e8b63a62168fed0abf3be01a6e8e8a4d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d6192f57e2e8b57a81b5989270e47ce3d77e9c9c7cf66a79ac7cd692a77428ca",
+				"dweb:/ipfs/QmQ9B5DRsFKHzydBB3GBb72eR3991JfQeqnHeL1HBY2rMe"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/PoolTokens.sol": {
+			"keccak256": "0x41a56eb0711910adcd198651b05252ef6419fe11d300006f09fd49fb596786e2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://59e0f6304d120010b29912d7f8efb0285b2c73648a7de3af5e7a5ac8bd111a23",
+				"dweb:/ipfs/QmT46osJye7j9K2K14QSnZhV7A1eVFZvh51zm4kciFajbD"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,1955 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "oldCreditLine",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newCreditLine",
+						"type": "address"
+					}
+				],
+				"name": "CreditLineMigrated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "DepositMade",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "borrower",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "DrawdownMade",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					}
+				],
+				"name": "DrawdownsPaused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					}
+				],
+				"name": "DrawdownsUnpaused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					}
+				],
+				"name": "EmergencyShutdown",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "who",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "configAddress",
+						"type": "address"
+					}
+				],
+				"name": "GoldfinchConfigUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Paused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "payer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "interestAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "principalAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "remainingAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "reserveAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "PaymentApplied",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "ReserveFundsCollected",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "principalSharePrice",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "principalDelta",
+						"type": "int256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "interestSharePrice",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "interestDelta",
+						"type": "int256"
+					}
+				],
+				"name": "SharePriceUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "sliceId",
+						"type": "uint256"
+					}
+				],
+				"name": "SliceCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "trancheId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lockedUntil",
+						"type": "uint256"
+					}
+				],
+				"name": "TrancheLocked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pool",
+						"type": "address"
+					}
+				],
+				"name": "TranchedPoolAssessed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Unpaused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "interestWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "principalWithdrawn",
+						"type": "uint256"
+					}
+				],
+				"name": "WithdrawalMade",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "FP_SCALING_FACTOR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "LOCKER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "NUM_TRANCHES_PER_SLICE",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ONE_HUNDRED",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "OWNER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PAUSER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "SECONDS_PER_DAY",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "SENIOR_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "__BaseUpgradeablePausable__init",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "__PauserPausable__init",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "allowedUIDTypes",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "assess",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "availableToWithdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "interestRedeemable",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalRedeemable",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "config",
+				"outputs": [
+					{
+						"internalType": "contract GoldfinchConfig",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createdAt",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "creditLine",
+				"outputs": [
+					{
+						"internalType": "contract IV2CreditLine",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "deadline",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "depositWithPermit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "drawdown",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "drawdownsPaused",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "emergencyShutdown",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "fundableAt",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getRoleMember",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleMemberCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					}
+				],
+				"name": "getTranche",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalDeposited",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "interestSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lockedUntil",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ITranchedPool.TrancheInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_config",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_juniorFeePercent",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_limit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_interestApr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_paymentPeriodInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_termInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_lateFeeApr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_principalGracePeriodInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_fundableAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_allowedUIDTypes",
+						"type": "uint256[]"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_fundableAt",
+						"type": "uint256"
+					}
+				],
+				"name": "initializeNextSlice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isAdmin",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "juniorFeePercent",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lockJuniorCapital",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lockPool",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newCl",
+						"type": "address"
+					}
+				],
+				"name": "migrateAndSetNewCreditLine",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_maxLimit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_interestApr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_paymentPeriodInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_termInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_lateFeeApr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_principalGracePeriodInDays",
+						"type": "uint256"
+					}
+				],
+				"name": "migrateCreditLine",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numSlices",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pauseDrawdowns",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "paused",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "pay",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "poolSlices",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalDeposited",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "interestSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lockedUntil",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ITranchedPool.TrancheInfo",
+						"name": "seniorTranche",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalDeposited",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "interestSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lockedUntil",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ITranchedPool.TrancheInfo",
+						"name": "juniorTranche",
+						"type": "tuple"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalInterestAccrued",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalDeployed",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "ids",
+						"type": "uint256[]"
+					}
+				],
+				"name": "setAllowedUIDTypes",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newFundableAt",
+						"type": "uint256"
+					}
+				],
+				"name": "setFundableAt",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "setLimit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "setMaxLimit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "sharePrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalShares",
+						"type": "uint256"
+					}
+				],
+				"name": "sharePriceToUsdc",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalDeployed",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalJuniorDeposits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unpause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unpauseDrawdowns",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "updateGoldfinchConfig",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalShares",
+						"type": "uint256"
+					}
+				],
+				"name": "usdcToSharePrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "interestWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalWithdrawn",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawMax",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "interestWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalWithdrawn",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "tokenIds",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					}
+				],
+				"name": "withdrawMultiple",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"availableToWithdraw(uint256)": {
+					"params": {
+						"tokenId": "The token representing the position"
+					},
+					"returns": {
+						"interestRedeemable": "The interest available to redeem",
+						"principalRedeemable": "The principal available to redeem"
+					}
+				},
+				"deposit(uint256,uint256)": {
+					"params": {
+						"amount": "The USDC amount to tranfer from the caller to the pool",
+						"tranche": "The number representing the tranche to deposit into"
+					},
+					"returns": {
+						"tokenId": "The tokenId of the NFT"
+					}
+				},
+				"drawdown(uint256)": {
+					"params": {
+						"amount": "The amount to drawdown from the creditline (must be < limit)"
+					}
+				},
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+				},
+				"getRoleMember(bytes32,uint256)": {
+					"details": "Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive. Role bearers are not sorted in any particular way, and their ordering may change at any point. WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information."
+				},
+				"getRoleMemberCount(bytes32)": {
+					"details": "Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
+				},
+				"migrateCreditLine(address,uint256,uint256,uint256,uint256,uint256,uint256)": {
+					"params": {
+						"_borrower": "The borrower address",
+						"_interestApr": "The new interest APR",
+						"_lateFeeApr": "The new late fee APR",
+						"_maxLimit": "The new max limit",
+						"_paymentPeriodInDays": "The new payment period in days",
+						"_termInDays": "The new term in days"
+					}
+				},
+				"pause()": {
+					"details": "Pauses all functions guarded by Pause See {Pausable-_pause}. Requirements: - the caller must have the PAUSER_ROLE."
+				},
+				"paused()": {
+					"details": "Returns true if the contract is paused, and false otherwise."
+				},
+				"pay(uint256)": {
+					"params": {
+						"amount": "The amount to repay"
+					}
+				},
+				"renounceRole(bytes32,address)": {
+					"details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`."
+				},
+				"revokeRole(bytes32,address)": {
+					"details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role."
+				},
+				"sharePriceToUsdc(uint256,uint256)": {
+					"params": {
+						"sharePrice": "The share price to convert",
+						"totalShares": "The total shares outstanding"
+					},
+					"returns": {
+						"_0": "The USDC amount of the input share price"
+					}
+				},
+				"totalJuniorDeposits()": {
+					"returns": {
+						"_0": "The total USDC amount deposited into all junior tranches"
+					}
+				},
+				"unpause()": {
+					"details": "Unpauses the contract See {Pausable-_unpause}. Requirements: - the caller must have the Pauser role"
+				},
+				"usdcToSharePrice(uint256,uint256)": {
+					"params": {
+						"amount": "The USDC amount to convert",
+						"totalShares": "The total shares outstanding"
+					},
+					"returns": {
+						"_0": "The share price of the input amount"
+					}
+				},
+				"withdraw(uint256,uint256)": {
+					"params": {
+						"amount": "The amount to withdraw (must be <= interest+principal currently available to withdraw)",
+						"tokenId": "The NFT representing the position"
+					},
+					"returns": {
+						"interestWithdrawn": "The interest amount that was withdrawn",
+						"principalWithdrawn": "The principal amount that was withdrawn"
+					}
+				},
+				"withdrawMax(uint256)": {
+					"params": {
+						"tokenId": "The NFT representing the position"
+					},
+					"returns": {
+						"interestWithdrawn": "The interest amount that was withdrawn",
+						"principalWithdrawn": "The principal amount that was withdrawn"
+					}
+				},
+				"withdrawMultiple(uint256[],uint256[])": {
+					"params": {
+						"amounts": "An array of amounts to withdraw from the corresponding tokenIds",
+						"tokenIds": "An array of tokens ids representing the position"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"assess()": {
+					"notice": "Triggers an assessment of the creditline and the applies the payments according the tranche waterfall"
+				},
+				"availableToWithdraw(uint256)": {
+					"notice": "Determines the amount of interest and principal redeemable by a particular tokenId"
+				},
+				"deposit(uint256,uint256)": {
+					"notice": "Deposit a USDC amount into the pool for a tranche. Mints an NFT to the caller representing the position"
+				},
+				"drawdown(uint256)": {
+					"notice": "Draws down the funds (and locks the pool) to the borrower address. Can only be called by the borrower"
+				},
+				"emergencyShutdown()": {
+					"notice": "Pauses the pool and sweeps any remaining funds to the treasury reserve."
+				},
+				"lockJuniorCapital()": {
+					"notice": "Locks the junior tranche, preventing more junior deposits. Gives time for the senior to determine how much to invest (ensure leverage ratio cannot change for the period)"
+				},
+				"lockPool()": {
+					"notice": "Locks the pool (locks both senior and junior tranches and starts the drawdown period). Beyond the drawdown period, any unused capital is available to withdraw by all depositors"
+				},
+				"migrateAndSetNewCreditLine(address)": {
+					"notice": "Migrates to a new creditline without copying the accounting variables"
+				},
+				"migrateCreditLine(address,uint256,uint256,uint256,uint256,uint256,uint256)": {
+					"notice": "Migrates the accounting variables from the current creditline to a brand new one"
+				},
+				"pauseDrawdowns()": {
+					"notice": "Pauses all drawdowns (but not deposits/withdraws)"
+				},
+				"pay(uint256)": {
+					"notice": "Allows repaying the creditline. Collects the USDC amount from the sender and triggers an assess"
+				},
+				"sharePriceToUsdc(uint256,uint256)": {
+					"notice": "Converts share price to USDC amounts"
+				},
+				"totalJuniorDeposits()": {
+					"notice": "Returns the total junior capital deposited"
+				},
+				"unpauseDrawdowns()": {
+					"notice": "Unpause drawdowns"
+				},
+				"updateGoldfinchConfig()": {
+					"notice": "Migrates to a new goldfinch config address"
+				},
+				"usdcToSharePrice(uint256,uint256)": {
+					"notice": "Converts USDC amounts to share price"
+				},
+				"withdraw(uint256,uint256)": {
+					"notice": "Withdraw an already deposited amount if the funds are available"
+				},
+				"withdrawMax(uint256)": {
+					"notice": "Similar to withdraw but will withdraw all available funds"
+				},
+				"withdrawMultiple(uint256[],uint256[])": {
+					"notice": "Withdraw from many tokens (that the sender owns) in a single transaction"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/TranchedPool.sol": "TranchedPool"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 1200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol": {
+			"keccak256": "0xe81686511d62f18b2d9c693c2c94c0a789c690de63aa90e15451ebf65c5bfd3e",
+			"urls": [
+				"bzz-raw://1332ee1d2b096456bf2e5795b5871d0fed47be6a31c9a2f2cef9206a299565ea",
+				"dweb:/ipfs/Qmdu1847Y4UL3gTjbLUManMGfxYEoyGPSodM3Br89SKzwx"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol": {
+			"keccak256": "0x9bfec92e36234ecc99b5d37230acb6cd1f99560233753162204104a4897e8721",
+			"urls": [
+				"bzz-raw://5cf7c208583d4d046d75bd99f5507412ab01cce9dd9f802ce9768a416d93ea2f",
+				"dweb:/ipfs/QmcQS1BBMPpVEkXP3qzwSjxHNrqDek8YeR7xbVWDC9ApC7"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/access/AccessControl.sol": {
+			"keccak256": "0x3954a5ee18b9297616912390eac7b0fe698e6ffea5a50dc3ccb0980cae210e86",
+			"urls": [
+				"bzz-raw://944779923ae00addaad98671de2303268765d53f1b0d66076280585edd084862",
+				"dweb:/ipfs/QmRtRFCkvsWD3c6WBpAh3wgMZKXBaFfRAvB76TsVFiUdEw"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/introspection/IERC165.sol": {
+			"keccak256": "0x9175561c374ec1fc33045e5dfdde2057e63e00debf432875f9e1e3395d99c149",
+			"urls": [
+				"bzz-raw://b0167043c1938b56904deaa481a73041aa4a9e054c60db0b0dfbebfe7869c06a",
+				"dweb:/ipfs/QmUoYjhymBr6WUpExKgRvKxXD5fcdpQEe1o9ResKZu6CC5"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/math/Math.sol": {
+			"keccak256": "0x50280546205978ca6573541955e15453b4c07a19e6c8ec4f6785a5ae0d7343fb",
+			"urls": [
+				"bzz-raw://6463c7833ba4b3cbc3b56d50b56e7ce870aaec674633d7897a459b234478fa3e",
+				"dweb:/ipfs/QmRkfjwTpA5E4SxUoHw8Qb7g6eXahtgmLrWWtTGH2TDZLj"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol": {
+			"keccak256": "0x04d34b3cd5677bea25f8dfceb6dec0eaa071d4d4b789a43f13fe0c415ba4c296",
+			"urls": [
+				"bzz-raw://e7e8b526a6839e5ba14f0d23a830387fec47f7043ce01d42c9f285b709a9d080",
+				"dweb:/ipfs/QmXmhhFmX5gcAvVzNiDPAGA35iHMPNaYtQkACswRHBVTNw"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/math/SignedSafeMath.sol": {
+			"keccak256": "0xfadc24a31d75d6b3f955190cffe13bbe6e24a274c12b2b60e8c4004131487ce8",
+			"urls": [
+				"bzz-raw://0ec35367d49b2ea45f556a439f836e208d2460faeb6e2341e9130d163128b619",
+				"dweb:/ipfs/QmTwKCBdkVAarY5hteSdwQ1J4GpogZoxCZHrbieMQVzuQJ"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x6cc1cb934a3ac2137a7dcaed018af9e235392236ceecfd3687259702b9c767ad",
+			"urls": [
+				"bzz-raw://0055fa88138cd1c3c6440370f8580f85857f8fe9dec41c99af9eafbeb8d9c3ce",
+				"dweb:/ipfs/QmX1xDh8vwGLLCH8ti45eXjQ7Wcxv1FEGTR3jkFnd5Nv6F"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/IERC721.sol": {
+			"keccak256": "0x734b5bedb78074a59bca6aff9e5a1801c9c7e9c5314daf32e14857161fb36932",
+			"urls": [
+				"bzz-raw://4574e71185f6693eb5cdf7a5126fba97caf0ec0366b08290dd361af44b3414d3",
+				"dweb:/ipfs/QmTPBh1R3EU973H7h6D1kQ1XBA1oX2QdSHZACyytWUYKsn"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol": {
+			"keccak256": "0x5f7da58ee3d9faa9b8999a93d49c8ff978f1afc88ae9bcfc6f9cbb44da011c2b",
+			"urls": [
+				"bzz-raw://4f089d954b3ecaa26949412fe63e9a184b056562c6c13dd4a0529a5d9a2e685a",
+				"dweb:/ipfs/QmVK5iCNAMcEJQxT59bsC5E53JQASDQPU6khHox3d5ZXCn"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/EnumerableSet.sol": {
+			"keccak256": "0x7f6401708b61f575b497aa7c8118ca9d70348643c83c26e70d9b643edf1a95c1",
+			"urls": [
+				"bzz-raw://b020d65f592c1715bc3d5799ad835cd975ef7d314f340f27603fb99ad86a0427",
+				"dweb:/ipfs/QmQoGZmzE5aDTMGJM4BW77eraerfTSV9Rs8wykpQ42i1in"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/Pausable.sol": {
+			"keccak256": "0x2ad5473fe88d9ab30c6cd495ab8895daae8c4a48cf8231282a2d339387b35006",
+			"urls": [
+				"bzz-raw://a737c60474c063efc28e5922b6a1d073588c010eb67f883273d3ec29d8e52d6b",
+				"dweb:/ipfs/QmWCeqeZhR45S1mcjPRYEMy1DCHMy9sXDfwYLPycFRh2Nk"
+			]
+		},
+		"@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard.sol": {
+			"keccak256": "0x75a600e5ed3443ecf3b7fb636064b404b358317fd6cd91e70e3ca5cf2370e882",
+			"urls": [
+				"bzz-raw://5916e664a17b3fdbdc311579705bad74f433769c340346c371db2ecfa8427d24",
+				"dweb:/ipfs/QmYNLuiPo4iRPWFJriVgqPELRUrFBFLpp5YnMMmqQ8zhBh"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/external/FixedPoint.sol": {
+			"keccak256": "0x36f2dc0c18a1ad4363388d19a70c852d84914af7a83fc88cdb3e759bafcb921c",
+			"license": "AGPL-3.0-only",
+			"urls": [
+				"bzz-raw://321c481566a4258d7a2387a462872d6c04862c6437bc4523727f03ad49ee1607",
+				"dweb:/ipfs/QmUrfJRcbHvGkuaJimmiaeMc2t53jWpVjB2myQoX2XdJkQ"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IBackerRewards.sol": {
+			"keccak256": "0x69973a97effbe4fee58ce0b7d26aa5ebc49cd86e37b31a6b2a9ead176191dcb7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://674ed85296e4384b28b6e4a5df33a5fbf2512f0416f76905cc5ef35b5399e6bc",
+				"dweb:/ipfs/QmNiLKvF4xcGa2UoYuERvfWrNVjvz7rCzQCrPeNKR5YkxK"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICUSDCContract.sol": {
+			"keccak256": "0x6d2cc9d84c55c0aa2f766aa3cc6371cdc7cf040e88e4f6a34ba1f6d40e2e0b5a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ddfd6e3a51a25cc4738750b94d9174f174761f0842c5edb55ebe450f6cc2a0b0",
+				"dweb:/ipfs/QmaHh6TD7Brazb5qJVvup7pTN5a8ofmdH4LjrnfUg1DRG4"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICreditDesk.sol": {
+			"keccak256": "0x11f2741210ea8aeb0b94f56e9418d856be1f235cc18dadd7ea2945506c9b4aa1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://044c509fd756e012886736e206535432ba2b7e2391908970e392eda5a63a82a7",
+				"dweb:/ipfs/QmUMb9HYduhCcsHSX1ukjufwRZGBJ9CExerVmDmNCR5czs"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICreditLine.sol": {
+			"keccak256": "0x09e43bbbca3f80c1c1dfc588dfe365792b89e9267026b01408b7ddf6b035c21a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f4217dbea9cf28aa2a2644346a4a212dcbaa0273d18b0c0bf09e7a5eaff20db1",
+				"dweb:/ipfs/QmWEwopfxd9ruB2AELTKwH6qaQdR5gSgK9pEPZRdT2mFRk"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IERC20withDec.sol": {
+			"keccak256": "0x7b5fb02e023b6006a5199992f242caf23f64240c91e625f1390d6ca421b59531",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://63dcca43b583209eb4a57c80a1d167f6c96fe3262eff955983d4fcdbfd66a62d",
+				"dweb:/ipfs/QmVHcjcFF1dZDvKUnrtDuFrJvBLosCMqXpnfQP7YuBVH46"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IFidu.sol": {
+			"keccak256": "0x130a7bd2ddca4f9da2f9090cbcc1d63c1e21e152baca4779f18939977a5f6c04",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3cf77464c131d38d8eead523dcd7ef7a9296d89f6106e53fa02769a90edb805a",
+				"dweb:/ipfs/QmPHqHPhMnLxNTaj58aW7KrhauUbxSMgs7otMB482rss6L"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IGo.sol": {
+			"keccak256": "0x012c616c599e94521e883eecb0c2d0331863aa1c90025bb84f64cca4d0c97a3b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8db27cb721a1efbdcacb780a8ff2c9fa9de912400b40a2ae5276db4c8cafca2b",
+				"dweb:/ipfs/QmSkURVYrEsZAR28t2e3EW1WFfDidfUq9uF46sWzx9bpgc"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IGoldfinchConfig.sol": {
+			"keccak256": "0xb4df9680fa1db27f4204d24cd15af68a73c81b62f83c2ca6d3ee6b0a98bc7da9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1e51563735182feb3cec0fb81c2a8b028e64bcc4c5a242ae94c8b88548184c01",
+				"dweb:/ipfs/Qmec3dijEBa6NmyGUF2VEmfsB7CnUPn2CscmgyfNfuNeTn"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IGoldfinchFactory.sol": {
+			"keccak256": "0xf513d3cc235725b04b123f8456a1a371753591fd6b080362c83b40dd41fb8a3e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4263158038d2a22be679d6922656fffa0e493c3c3d5f68195dfed0a488780873",
+				"dweb:/ipfs/QmRPBGBGSL4Xi72DAGteb3TN9vZWVr7mKCtt4mSvkbYWdw"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IPool.sol": {
+			"keccak256": "0xc113de25b7c7e2ac0180d32fab63d0eab1f9f6198ebc006e414f4fbd309026c4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bef1439a09bf2cb4a568bbe4fc67628d7ca5d9a22e29c2e75b0a9565e38f349e",
+				"dweb:/ipfs/QmXDvsYjvqA9iGP3Ps6i3DQu6Sfzb5EoChtBHJHBKzZLqm"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IPoolTokens.sol": {
+			"keccak256": "0xdbb1f3480d9d61b5afef1d47d3d5675450e857fd6ade0e48eda5c9e81b2be551",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f36ab1e4cd5f98829e39d33f68ed17e93139cabbb965c6d480457096dc116caa",
+				"dweb:/ipfs/QmPj3Q9ikUDg7B9yekuwGktioL6KyzU3BFwxgfqBuXDNTV"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ISeniorPool.sol": {
+			"keccak256": "0xe514d470a9cb73449976c92844c4a587eea90980153af70e223bc9d6854c2497",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://55c6d5baeaa04d2e6d44013eee6d1465dca6852b6815d826c50260d6ba392ffd",
+				"dweb:/ipfs/Qme8C2oc1S3HtmZ9zxSrWSiKaNTBaDMarSbcMkypL124dh"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ISeniorPoolStrategy.sol": {
+			"keccak256": "0x96897152c52e299397a50aeb6aefe5af19fb1152d7dd15a1b29fb21faecb45d7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e8f93a7f3405c3ec32cd0a9616154d6092d5096cc7519e3323c98fdcd4e89adb",
+				"dweb:/ipfs/QmdrtVZaM1CZBgMLSkx5J1ULZxWni2REoqP1F66ESR8tz9"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ITranchedPool.sol": {
+			"keccak256": "0xdc061e9cc61e6710b3680bbb6879121eb20b68ee71b63826a609d4d2cd84f24c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1c0f12a5fa203b02df0a0389549799229004d9d95309056faee8e2ddbfe947c9",
+				"dweb:/ipfs/QmNco6baf9yFSWQY8tY5zUfSkgshNtgZphqbKiDDvPNfNn"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IV2CreditLine.sol": {
+			"keccak256": "0x67ccd4b2d3a3fffb97bbd5453175bbc8812af616a05349834a6d140cd6efbda6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c95546bfbb0ec73f7927d4255ae43ca554ba4ac1de64ac7ed9a56ab14fac2559",
+				"dweb:/ipfs/QmZt6m1dorn4hCifthJ7EE5nBxWAAMw8CEyMsGkuqMXrsS"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/library/SafeERC20Transfer.sol": {
+			"keccak256": "0x2ca2fbd70af85fe8986297482ede85eeb5ef835efd12e051db2e45b14b5bbeef",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://46cf8d591108fcac818aed793da34bc48c4d93c2a64248056de0ff7da3be5421",
+				"dweb:/ipfs/QmVRSxFARxnjq7qSWGjdnrwELJdwPXn84P9U2F8JHg1KZh"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/BaseUpgradeablePausable.sol": {
+			"keccak256": "0x7506f4edde679faa1260af6e090c4d090a6c39c6d9420d3b1712822219a60b2c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://08edb3b9dade7cc53750e6921a531ffeb47df0c553ce62e76781dff8713662dc",
+				"dweb:/ipfs/QmSqSfX6QrJkFBZKsp8fEFWjbQiFGxhsmSjTDVCnFMgzeG"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/ConfigHelper.sol": {
+			"keccak256": "0x348ded3802d97beb1660d48967600194de016305ed81bf24d1dff14d7513e71d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7fd50260d00fd69f78dbd9ee09961200a65e6bb62cc8f88c33262ff20865834f",
+				"dweb:/ipfs/QmR7eJtLarQ5Xo7Csa3mbbbbW4xNXhMNJ9xPmaFP8DNdn4"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/ConfigOptions.sol": {
+			"keccak256": "0x1410e0f8353a78fa244f040df467a571cdf39e1b499a6791db0a530334926c72",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f584432207cce13410ec4834d50673b9ca136c4bb2890a9d74a1a5330c0e9f8c",
+				"dweb:/ipfs/QmVqDYNp32wwZ7JS65q4kNP1GPMiaeckqz1WdzxF3xum3J"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/GoldfinchConfig.sol": {
+			"keccak256": "0x20a1c0f6183595dc4529b65f21beb92c76c959bffaba947b9648f6c422f99767",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9fa49d42bc310005e739f6b9619a5b67e453099f149667ba0d0cb5c921047b93",
+				"dweb:/ipfs/QmNmCXFGLDcSYyE8YujagoTQDScUozmH1s6GnfcmqYqaKm"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/PauserPausable.sol": {
+			"keccak256": "0x855f5027a20c77b500dd8618a4881c64e8b63a62168fed0abf3be01a6e8e8a4d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d6192f57e2e8b57a81b5989270e47ce3d77e9c9c7cf66a79ac7cd692a77428ca",
+				"dweb:/ipfs/QmQ9B5DRsFKHzydBB3GBb72eR3991JfQeqnHeL1HBY2rMe"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/TranchedPool.sol": {
+			"keccak256": "0x95ee85fab2ad171b280dcf0ca61702c75c2b19370a6d1cca368a6eff74dadefc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4a7975c91ca4ca28ff1a400aad735f40e8ce0d4ae53628a889c1f48cede08764",
+				"dweb:/ipfs/QmbBmvrLbpf3TQ5pK9fL7XcpVyc11qn613tCCaJ4bjQAPf"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/protocol/core/TranchingLogic.sol": {
+			"keccak256": "0x8e94d9b2732c42369121ba6978db5f0e16e52274b4f6283a6b2f4851f9bd8251",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://154d8b96a333985b970c6c24f221bdfc20182556f4349c4446bcd13e6af5834f",
+				"dweb:/ipfs/QmU3DBLDZhNcxboMg5YvbZEbfixhcev7fH3LZTtXHbPVd8"
+			]
+		}
+	},
+	"version": 1
+}

@@ -357,7 +357,7 @@ contract Pool is BaseUpgradeablePausable, IPool {
 
   function usdcToFidu(uint256 amount) internal pure returns (uint256) {
     return amount.mul(fiduMantissa()).div(usdcMantissa());
-  }
+}
 
   function cUSDCToUSDC(uint256 exchangeRate, uint256 amount) internal pure returns (uint256) {
     // See https://compound.finance/docs#protocol-math

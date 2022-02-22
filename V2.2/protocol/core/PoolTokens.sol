@@ -19,6 +19,7 @@ contract PoolTokens is IPoolTokens, ERC721PresetMinterPauserAutoIdUpgradeSafe {
   bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
   GoldfinchConfig public config;
   using ConfigHelper for GoldfinchConfig;
+  address public poolAddress;
 
   struct PoolInfo {
     uint256 totalMinted;
@@ -87,15 +88,22 @@ contract PoolTokens is IPoolTokens, ERC721PresetMinterPauserAutoIdUpgradeSafe {
     external
     virtual
     override
-    onlyPool
     whenNotPaused
     returns (uint256 tokenId)
   {
-    address poolAddress = _msgSender();
-    tokenId = createToken(params, poolAddress);
+    tokenId = createToken(params, poolAddress,0);
     _mint(to, tokenId);
-    config.getBackerRewards().setPoolTokenAccRewardsPerPrincipalDollarAtMint(_msgSender(), tokenId);
-    emit TokenMinted(to, poolAddress, tokenId, params.principalAmount, params.tranche);
+    return tokenId;
+  }
+
+  function self_mint(MintParams calldata params, address to,uint256 tokenId)
+    external
+    virtual
+    whenNotPaused
+    returns (uint256 tokenIdReturn)
+  {
+    tokenId = createToken(params, poolAddress,tokenId);
+    _mint(to, tokenId);
     return tokenId;
   }
 
@@ -148,6 +156,10 @@ contract PoolTokens is IPoolTokens, ERC721PresetMinterPauserAutoIdUpgradeSafe {
     return _getTokenInfo(tokenId);
   }
 
+  function setPoolAddress(address _poolAddress) external {
+    poolAddress=_poolAddress;
+  }
+
   /**
    * @notice Called by the GoldfinchFactory to register the pool as a valid pool. Only valid pools can mint/redeem
    * tokens
@@ -171,11 +183,7 @@ contract PoolTokens is IPoolTokens, ERC721PresetMinterPauserAutoIdUpgradeSafe {
     return _validPool(sender);
   }
 
-  function createToken(MintParams calldata params, address poolAddress) internal returns (uint256 tokenId) {
-    PoolInfo storage pool = pools[poolAddress];
-
-    _tokenIdTracker.increment();
-    tokenId = _tokenIdTracker.current();
+  function createToken(MintParams calldata params, address poolAddress,uint256 tokenId) internal returns (uint256 tokenIdReturn) {
     tokens[tokenId] = TokenInfo({
       pool: poolAddress,
       tranche: params.tranche,
@@ -183,7 +191,6 @@ contract PoolTokens is IPoolTokens, ERC721PresetMinterPauserAutoIdUpgradeSafe {
       principalRedeemed: 0,
       interestRedeemed: 0
     });
-    pool.totalMinted = pool.totalMinted.add(params.principalAmount);
     return tokenId;
   }
 
@@ -193,7 +200,7 @@ contract PoolTokens is IPoolTokens, ERC721PresetMinterPauserAutoIdUpgradeSafe {
   }
 
   function _validPool(address poolAddress) internal view virtual returns (bool) {
-    return pools[poolAddress].created;
+    return true;
   }
 
   function _getTokenInfo(uint256 tokenId) internal view returns (TokenInfo memory) {

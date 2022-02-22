@@ -1,0 +1,446 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "assess",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "availableToWithdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "interestRedeemable",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalRedeemable",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createdAt",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "creditLine",
+				"outputs": [
+					{
+						"internalType": "contract IV2CreditLine",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "deadline",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "depositWithPermit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "drawdown",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tranche",
+						"type": "uint256"
+					}
+				],
+				"name": "getTranche",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalDeposited",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principalSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "interestSharePrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lockedUntil",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ITranchedPool.TrancheInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_config",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_juniorFeePercent",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_limit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_interestApr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_paymentPeriodInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_termInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_lateFeeApr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_principalGracePeriodInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_fundableAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_allowedUIDTypes",
+						"type": "uint256[]"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_fundableAt",
+						"type": "uint256"
+					}
+				],
+				"name": "initializeNextSlice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lockJuniorCapital",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lockPool",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "pay",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "setFundableAt",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalJuniorDeposits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "interestWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalWithdrawn",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawMax",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "interestWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalWithdrawn",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "tokenIds",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					}
+				],
+				"name": "withdrawMultiple",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ITranchedPool.sol": "ITranchedPool"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 1200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ICreditLine.sol": {
+			"keccak256": "0x09e43bbbca3f80c1c1dfc588dfe365792b89e9267026b01408b7ddf6b035c21a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f4217dbea9cf28aa2a2644346a4a212dcbaa0273d18b0c0bf09e7a5eaff20db1",
+				"dweb:/ipfs/QmWEwopfxd9ruB2AELTKwH6qaQdR5gSgK9pEPZRdT2mFRk"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/ITranchedPool.sol": {
+			"keccak256": "0xdc061e9cc61e6710b3680bbb6879121eb20b68ee71b63826a609d4d2cd84f24c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1c0f12a5fa203b02df0a0389549799229004d9d95309056faee8e2ddbfe947c9",
+				"dweb:/ipfs/QmNco6baf9yFSWQY8tY5zUfSkgshNtgZphqbKiDDvPNfNn"
+			]
+		},
+		"Documents/STARTUPS/alloyx/goldfinch-contracts/V2.2/interfaces/IV2CreditLine.sol": {
+			"keccak256": "0x67ccd4b2d3a3fffb97bbd5453175bbc8812af616a05349834a6d140cd6efbda6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c95546bfbb0ec73f7927d4255ae43ca554ba4ac1de64ac7ed9a56ab14fac2559",
+				"dweb:/ipfs/QmZt6m1dorn4hCifthJ7EE5nBxWAAMw8CEyMsGkuqMXrsS"
+			]
+		}
+	},
+	"version": 1
+}
