@@ -1,0 +1,396 @@
+https://gist.github.com/TCHKVSKY/44eb04d07de8a04cb58e33362bf69ece
+
+### critical = 0 high = 1 medium = 4 low = 1 gas_optimization = 3 informational = 11 total = 20
+
+---
+
+## High Risk
+
+### `GFILedger` - Missing `GFI` tokens transfers
+
+**Severity:** _High Risk_
+
+**Context:**
+[GFILedger.sol#L38-L43](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/membership/GFILedger.sol#L38-L43)
+[GFILedger.sol#L45-L50](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/membership/GFILedger.sol#L45-L50)
+
+**Description:**
+The `GFILedger` contract appears to track and receive the GFI tokens used for the membership rewards. When depositing it is supposed to pull the deposited `GFI` tokens from `MembershipOrchestrator`to itself, and when withdrawing, it is supposed to send the `GFI` tokens back to the owner. The contract properly tracks the adding and removal of those tokens from its internal tracker, but it does not do any actual transfer of said tokens, effectively leaving any deposited tokens stuck in the contract with this implementation or effectively burned. There is an assert, but it will always hold, as the assert simply ensures that the actual balance of tokens within the contract is equal to or greater than the tracked balance, which is a symptom this issue will exactly create. There is additionally no indication that this contract approves another contract to handle these transfers on its behalf.
+
+**Recommendation:**
+Amend logic within the `deposit` and `withdraw` functions to actually transfer the tokens to the contract and out of the contract back to owners respectively, or add logic to allow an operator or admin to approve another contract to do the transfers. The former is likely simpler and safer.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+<br>
+
+## Medium Risk
+
+### Missing null address check on `AccessControl` admin component, where null address is default admin
+
+**Severity:** _Medium Risk_
+
+**Context:** [AccessControl.sol#L65-L72](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/AccessControl.sol#L65-L72)
+
+**Description:** With the current design of the `AccessControl` contract. The default admin of every unset contract, is `address(0)`. Under the case of directly utilizing `msg.sender`, this is unlikely to be an issue, as the null address shouldn't ever be `msg.sender`. However, under this architecture, it is operators setting this variable that is potentially forwarded here. Even a benign operator could issue a `tearDown()` call on the context, and reset the `msgSender` to be the null address, in which case passing that variable to this, on a newly deployed and unset contract could lead to admin-level exploitation in scenarios.
+
+With the other potential issue of operators not having exclusive locks to the context and being able to inject `msgSender`, this could lead to critical level exploits across the architecture.
+
+Even under solidity's own `msg.sender` it is bad practice to have the null address be the default programmatically.
+
+**Recommendation:** Introduce a null address check to avoid `address(0)` being able to act as a default admin for all contracts in this architecture. Also consider a general reworking of the admin StateVar, and potentially just inheriting the operator methods for admin as well, as the current admin system is both limited and intricate, with any contract only being allowed a single set admin, while the operator system by default has all accounts unpermissioned, and allows permissioning of multiple accounts per contract which is overall better, but there is a risk of hanging permissions. Consider directly reading `msg.sender` as well if possible to reduce these potential attack surfaces.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### `Context.setup` relies on a weak mutex that can lead to malicious variable injection
+
+**Severity:** _Medium Risk_
+
+**Context:**
+[Context.sol#L34-L50](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Context.sol#L34-L50)
+[ContextBuilder.sol#L20-L24](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/ContextBuilder.sol#L20-L24)
+
+**Description:** In the current case of the `withContext` modifier, any external call within the body that potentially leads to an operator that does a teardown, would lead to the `msgSender` context being set to `address(0)`. This may be then abused by this or another operator to set a different `msgSender` context. If the external calls then successfully finish, and return to the body here, and then the use of `msgSender` context follows within the body, it could lead to exploitable conditions via this malicious injection or variable clearing.
+
+Likewise an exploited or malicious operator accessed could do the same and arbitrarily set this variable due to the weak mutex, which simply checks that it is `address(0)` but doesn't provide an exclusive lock.
+
+The current mutex pattern simply depends on the last `msgSender` context being cleared before a new one can be set. The operations are doable by any operator, with one operator being able to clear a still dependent upon context of another.
+
+**Recommendation:** An exclusive lock should be introduced, whereby the current lock can only be lifted by the address or contract that requested the lock in the first place. Precautions do need to be taken to avoid potential for deadlock. The GF team had communicated that the intent currently is for only one contract's context to be tracked here, so this should fit within their designs. Another option in the case they wish it to track multiple different contract contexts, is to track them via mappings, whereby other contracts or operators won't be able to maliciously alter the state of other ones.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### `SimpleAssetVault._burnToken` may run out of gas for a user with many positions
+
+**Severity:** _Medium Risk_
+
+**Context:** [SimpleAssetVault.sol#L248-L260](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/SimpleAssetVault.sol#L248-L260)
+
+**Description:**
+`SimpleAssetVault._burnToken` may not be able to complete with today's mainnet gas limits once a user's balance exceeds ~5000 based on preliminary naive tests. Effectively, it means a user will not be able to withdraw any of his opened positions.
+
+**Recommendation:**
+Since the purpose of this function is to remove a single `ownerToken`, then the index of the position can be provided by the function caller, and line 250 will be enough for validation. The `ownerTokens` array represents the tokens held by a specific `position.owner` there is no concrete potential for a front-running denial of service that can be caused by others relying on the fact that the index of a token might be changed in removals.
+
+Let's explain why the potential front-running denial of service is not a concern here using an example. In case `ownerTokens = [a,b,c]`, and the owner is willing to remove `c`, then `_burnToken(c,2)` should be called. Since `c` is the last element, then in theory this transaction will revert if `_burnToken(b,1)` will front-run it. But, these operations are only callable by the position's owner.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Potentially malicious call via operator could lay false claim to unowned balances within `GFILedger`
+
+**Severity:** _Medium Risk_
+
+**Context:** [GFILedger.sol#L38-L43](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/membership/GFILedger.sol#L38-L43)
+
+**Description:**
+Contracts within the cake framework can accept multiple operators. In the case of `GFILedger`, if a malicious operator were added, they could lay arbitrary and false claim when the condition `context.gfi().balanceOf(address(this)) > total` is true, allowing an operator to claim `context.gfi().balanceOf(address(this)) - total` to any arbitrary address. At the same time, a benign operator could use this as a rescue function for missent funds.
+
+A malicious operator would generally lead to a complete security failure and is therefore considered low likelihood, however, in this case a compromised operator is not necessary, but potentially a malicious call via an operator. For this audit, the full call logic to this function is missing for audit, so this issue serves as a warning to ensure somewhere early in the call, there is an actual check for a deposit/transfer of tokens, otherwise anyone could potentially misuse the operator for this exploit, for them to lay claim to tokens they have not deposited. Within the current logic, no such check is available.
+
+Alongside the currently missing withdrawal logic, this issue which on its own is considered medium risk, could be utilized with that other issue to create an essentially critical level exploit in the case of an upgradable contract. In that, users deposit their funds, and then withdraw. The ledger will untrack their balances, but never send them their tokens. Anytime before the update or after the update, assuming a metamorphic or proxy upgradable contract, and assuming no changes to the deposit logic, a malicious operator could lay claim to all those balances for themselves, and after update successfully withdraw the GFI tokens to their account.
+
+**Recommendation:**
+The potential impact of this issue is greatly reduced with proper withdrawal logic. Additionally, the impact is also limited in the case of an immutable contract rather than an upgradable one. The attack surface of this issue is greatly reduced, if somewhere within the call in or before the call to `deposit`, it is ensured that the callee/msg.sender has indeed transferred the tokens being claimed as deposited, ideally it would be checked within this contract that actually holds the tokens.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+<br>
+
+## Low Risk
+
+### Critical state-changing functions should be supplemented by events
+
+**Severity:** _Low Risk_ / _Informational_
+
+**Context:** [AccessControl.sol#L26-L54](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/AccessControl.sol#L26-L54)
+
+**Description:** The `AccessControl` contract handles the auth for multiple contracts and has methods to add, remove, and set varying levels of permissions across these. In the current iteration, changes of state resulting from these are not accompanied by supporting events.
+
+In the best case, this can make tracking and auditing of the state here, especially with a nested mapping, unnecessarily difficult for the team and also for users interested.
+
+In the worst case, the team could leave hanging permissions from the lack of tracking which could introduce security risks within the architecture.
+
+Having these events and the team actively logging and tracking them could also alert the team in case of any account compromises via a watchdog service, which has helped minimize exploit impacts in certain previous cases.
+
+**Recommendation:** Supplement these critial state-changing functions with supporting events. An example recommended re-iteration of this contract, accounting only for the admin related methods during the audit was:
+
+```solidity
+contract suggestedAC {
+  mapping(address => address) public admins;
+  event adminSet(address indexed resource, address indexed admin);
+  error isNotAdmin(address resource, address accessor);
+  constructor (address admin) {
+    _setAdmin(address(this), admin);
+  }
+  function setAdmin(address resource, address admin) external {
+    requireAdmin(address(this), msg.sender);
+    _setAdmin(resource, admin);
+  }
+  function _setAdmin(address resource, address admin) private {
+    admins[resource] = admin;
+    emit adminSet(resource, admin);
+  }
+  function requireAdmin(address resource, address accessor) public view {
+    bool isAdmin = admins[resource] == accessor;
+    if (!isAdmin) revert isNotAdmin(resource, accessor);
+  }
+}
+```
+
+It includes a few other recommendations that came up during the audit, but not all, so should be taken as a pseudo example to build off of.
+
+The graph visualization contrast of the suggested contract and one of the iterations audited is shown in the following:
+
+![image](https://user-images.githubusercontent.com/2888248/191997050-59e2e3c0-7a6e-4103-93df-0e2865a6367a.png)
+
+**Goldfinch:**
+
+**Spearbit:**
+
+<br>
+
+## Gas Optimization
+
+### Caching variables in `memory` is cheaper than in `storage`
+
+**Severity:** _Gas Optimization_
+
+**Context:**
+[SimpleAssetVault.sol#L244](https://github.com/spearbit-audits/goldfinch-september/blob/4230a28e55b39fb8f4ff26817a5050839eb1ac51/SimpleAssetVault.sol#L244)
+[SimpleAssetVault.sol#L245](https://github.com/spearbit-audits/goldfinch-september/blob/4230a28e55b39fb8f4ff26817a5050839eb1ac51/SimpleAssetVault.sol#L245)
+
+**Description:** `position` and `ownerTokens` are called multiple times from `storage`. Using `memory` will cost less gas.
+
+**Recommendation:** Cache a variable in `memory` if it is read multiple times. [L251](https://github.com/spearbit-audits/goldfinch-september/blob/4230a28e55b39fb8f4ff26817a5050839eb1ac51/SimpleAssetVault.sol#L251) and [L252](https://github.com/spearbit-audits/goldfinch-september/blob/4230a28e55b39fb8f4ff26817a5050839eb1ac51/SimpleAssetVault.sol#L252) will need to be amended in this case to directly access and set the `owners` variables.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Unnecessary repeated state writes that produce no side-effect and conversions in `SimpleAssetVault`
+
+**Severity:** _Gas Optimization_
+
+**Context:**
+[SimpleAssetVault.sol#L203-L214](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/SimpleAssetVault.sol#L203-L214)
+[SimpleAssetVault.sol#L132](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/SimpleAssetVault.sol#L132)
+
+**Description:** The `_checkpoint` function repeatedly does a write to a struct member containing the timestamp the last checkpoint occurred, however, in most cases this has no side-effect on the contract whatsoever, essentially leading to sunken gas costs for
+saving a changing higher resolution variable (timestamp in seconds) that is converted into a lower resolution variable (timestamp in weeks) that is unchanged in most cases when actually used.
+
+Additionally on the 2nd context, this leads to cases where unnecessary conversions and additional operations are introduced as overhead.
+
+**Recommendation:** The first portion of the unnecessary state writes could be remedied by only saving the variable when a side-effect is imminent and expected to occur. This could be saving the timestamp only when it results in an epoch change.
+
+The ideal change likely here, is just decreasing the time resolution to weeks instead of seconds, which is essentially what the Epoch representation is. It would both cut down on the unnecessary writes, unnecessary conversion at read times as you convert it just upon write, and it may give more headroom for struct packing if more members were to be introduced.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Tight-packing of struct possible in `SimpleAssetVault`
+
+**Severity:** _Gas Optimization_
+
+**Context:** [SimpleAssetVault.sol#L59-L66](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/protocol/core/SimpleAssetVault.sol#L59-L66)
+
+**Description:** The first member is an address which occupies 20 bytes or 160-bits, and the next 2 are currently set to 256-bits meaning all 3 members utilize 3 storage slots, whilst the first technically only occupies one partially. The 3rd member is a timestamp, and 256-bits is overkill for a seconds-based timestamp.
+
+To give an idea, it could be packed with the address type, by setting it a uint96. Based on some naiive calculations this should provide a time resolution exceeding 200+ octodecillion years, which would be more than enough as it is approaching infinite times the age of the universe. Utilizing uint64 would give a time resolution exceeding 500+ billion years, or 42 times the current age of the universe.
+
+**Recommendation:** Reduce the timestamp bitsize to any between 64 and 96 to capitalize on tightly-packed structs and utilize only 2 storage slots instead of 3. Additionally you will have to align the smaller bit members together for the compiler to take advantage of this.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+<br>
+
+## Informational
+
+### `tokenByIndex()` will revert if `index` exceeds `totalSupply()`
+
+**Severity:** _Low Risk_ / _Informational_
+
+**Context:** [SimpleAssetVault.sol#L118-L120](https://github.com/spearbit-audits/goldfinch-september/blob/4230a28e55b39fb8f4ff26817a5050839eb1ac51/SimpleAssetVault.sol#L118-L120)
+
+**Description:** According to [ERC721 Specification](https://eips.ethereum.org/EIPS/eip-721), `tokenByIndex()` will revert if `index` > `totalSupply()`. This also applies to `tokenOfOwnerByIndex()`.
+
+**Recommendation:** Add a check or custom error to handle cases.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Comments and logic does not match
+
+**Severity:** _Informational_
+
+**Context:**
+[SimpleAssetVault.sol#L92-L97](https://github.com/spearbit-audits/goldfinch-september/blob/4230a28e55b39fb8f4ff26817a5050839eb1ac51/SimpleAssetVault.sol#L92-97)
+[CapitalDirector.sol#L25-L28](https://github.com/spearbit-audits/goldfinch-september/blob/CapitalDirector/CapitalDirector.sol#L25-28)
+
+**Description:** Comment shows contract is initialized and controlled by `owner` while logic does not show `owner` initialization.
+
+**Recommendation:** Update comment to match logic.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Typo in `ICapitalAssets`
+
+**Severity:** _Informational_
+
+**Context:** [ICapitalAssets.sol#L21](https://github.com/spearbit-audits/goldfinch-september/blob/3925cd2dbb97f9955c7f0335d723c401e64aa75c/ICapitalAssets.sol#L21)
+
+**Description:** A little typo in the comment of `getUsdcEquivalent()`
+
+**Recommendation:** Change "assetW" to "asset"
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Refactoring of `AccessControl` for improved consistency and quality
+
+**Severity:** _Informational_
+
+**Context:** [AccessControl.sol#L51-L54](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/AccessControl.sol#L51-L54)
+
+**Description:** Previous audits had commended the use of the separation of auth vs logic in external and private functions respectively as good practices. This contract is not following this pattern which has led to some missed opportunities for improved code quality and maintenance.
+
+As an example, the constructor has its own isolated logic for adding an admin when it should ideally re-use functionality to set an admin.
+
+Likewise there are 2 duplicated methods, `requiresAdmin` and `requiresSuperAdmin` with essentially the same logic. `requiresAdmin` can already do the limited scope of what `requiresSuperAdmin` does.
+
+Therefore the latter should either be removed, as showcased in a previous refactoring example of this contract, or should just call and reuse `requiresAdmin`.
+
+**Recommendation:** Consider applying the external/private function pattern followed in previous contracts, and removing any duplicate functions that already existing functions can handle the workload of, or at least ensuring their respective code blocks are not duplicated to improve code reuse and maintanability.
+
+Please refer to the recommendation in issue https://github.com/spearbit-audits/goldfinch-september/issues/26 for a suggested example of these changes and visualized improvements to the code.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Use a locked compiler version pragma
+
+**Severity:** _Informational_
+
+**Context:** [Base.sol#L2](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Base.sol#L2)
+
+**Description:** An unlocked pragma may produce ambiguity as to the solc version to use for its compilation and on which versions it has actually been tested and is intended for. This can additionally produce friction between internal engineering, where different members could be testing and building for different versions.
+
+**Recommendation:** Use a locked pragma to clearly signal the intended version to be used for the contracts.
+
+Only a single contract within context is mentioned, however, this applies to all within scope of this audit.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Setting constructor visibility is obsolete since solc v0.7, replace with `abstract` where necessary
+
+**Severity:** _Informational_
+
+**Context:** [Base.sol#L19](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Base.sol#L19)
+
+**Description:** Specification of constructor visibility was an initial method of setting a contract to be abstract or not (e.g. non-deployable or deployable). With the `abstract` keyword declaration available since solc 0.7, setting constructor visibility is considered obsolete.
+
+**Recommendation:** Remove any visibility specifiers on the constructors of contracts within this audit scope, that are intended to be compiled with 0.8.16+, and replace cases with internal visibility to an abstract contract.
+
+The context here mentions only a single contract as an example, but it is seen throughout the codebase and should be amended across all contracts.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Avoid unused imports
+
+**Severity:** _Informational_
+
+**Context:** [Base.sol#L5](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Base.sol#L5)
+
+**Description:** The `Router` import appears unused within this scope.
+
+**Recommendation:** Avoid having unnecessary and unused imports as a best practices measure.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### `AccessControl` name clash between contract name and library constant
+
+**Severity:** _Informational_
+
+**Context:** [Routing.sol#L22-L23](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Routing.sol#L22-L23)
+
+**Description:** The library's constant shares the name of a contract imported within that contract's scope. This can cause ambiguity and shadowing. Additionally the library is named `Contracts` which can cause further confusion to the expected type returned by that call.
+
+**Recommendation:** Consider renaming the library to something more apt like RoutingKeys, or RoutingDict, and suffixing or prefixing Key or K to the current variable names, to avoid confusion and avoid potential instances of shadowing from that library and imports.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### tx.\* built-in symbol shadowed within Context by function
+
+**Severity:** _Informational_
+
+**Context:** [Context.sol#L54](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Context.sol#L54)
+
+**Description:** The `tx()` function shadows the `tx.*` built-in, making it and its `tx.origin` and `tx.gasprice` properties inacessible in this contract and any that may inherit it. This could also be misused as an underhanded solidity coding technique, whereby the struct is expanded to include the origin and gasprice members, and the declared struct variable is named `tx` and set public, whereby it would transparently shadow `tx.*` and its properties within this contract and across any inheriting ones.
+
+**Recommendation:** Avoid shadowing of any existing variables, especially solidity's globals and built-ins. Rename this function to something that doesn't clash with any other names, potentially `txnCtx` or if switching it to just `msgSender` access consider `userSender`.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### Restrict visibility on all `Context` functions and set `view` specifier where applicable
+
+**Severity:** _Informational_
+
+**Context:**
+[Context.sol#L37](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Context.sol#L37)
+[Context.sol#L47](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Context.sol#L47)
+[Context.sol#L54](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Context.sol#L54)
+
+**Description:**
+The visibility of these functions is currently set to public, however, they are never utilized within this contract, and this contract appears to be a standalone contract that is not inerited. In this case, it is limitable to external and will help clarify intent and limit the scope of the functions.
+
+Additionally, the currently named `tx()` function on L54 only does a state read, and should have the `view` specifier added.
+
+**Recommendation:**
+Limit their visibility to external. Add view specifier on L54 to currently named `tx()` function. Always setting these to the most constrained is recommended both to clarify their intent and limit potential attack surface.
+
+**Goldfinch:**
+
+**Spearbit:**
+
+### A single member struct is unnecessary and inefficient
+
+**Severity:** _Informational_ / _Gas Optimization_
+
+**Context:** [Context.sol#L15-L17](https://github.com/warbler-labs/mono/blob/a9f35eafcdee40ce594fe356d207a628329bed7c/packages/protocol/contracts/cake/Context.sol#L15-L17)
+
+**Description:**
+Structs are considered complex types used to create more complicated data types that contain multiple properties of potentially different types. This struct contains only a single property, deeming it potentially unnecessary and inefficient.
+
+**Recommendation:**
+Consider just utilizing a single state variable address, which is all the struct contains anyways, it should lead to simpler and more efficient code.
+
+**Goldfinch:**
+
+**Spearbit:**
